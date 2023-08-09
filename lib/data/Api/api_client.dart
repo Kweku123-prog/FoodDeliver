@@ -1,12 +1,14 @@
+import 'package:food_delivery/utils/app_constant.dart';
 import 'package:get/get.dart';
 
 class ApiClient extends GetConnect implements GetxService{
-  late String token ;
+  late String token  ;
   final String appBaseurl;
   late Map<String ,String> _mainheaders;
   ApiClient({required this.appBaseurl}){
     baseUrl=appBaseurl;
     timeout=Duration(seconds:20);
+    token=AppConstants.TOKEN;
     _mainheaders={
 
       'Content-type':'application/json; charset=UTF-8',
@@ -20,7 +22,7 @@ Future<Response>getData(String uri) async {
      Response response =await get(uri);
      return response;
     }catch(e){
-      return Response(statusCode: 1,statusText: e.toString());
+      return Response(statusCode: 1,statusText: e.toString() );
     }
 }
 }
