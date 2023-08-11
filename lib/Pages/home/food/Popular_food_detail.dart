@@ -5,6 +5,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/Pages/home/main_food_page.dart';
+import 'package:food_delivery/controllers/popular_producr_controller.dart';
+import 'package:food_delivery/utils/app_constant.dart';
 import 'package:food_delivery/widgets/app_column.dart';
 import 'package:food_delivery/widgets/app_icon.dart';
 import 'package:food_delivery/widgets/expandable_text_widget.dart';
@@ -18,10 +20,18 @@ import '../../../widgets/icon_and_text_widget.dart';
 import '../../../widgets/small_text.dart';
 
 class PopularFoodDetail extends StatelessWidget {
-  const PopularFoodDetail({Key?key}):super(key:key);
+
+  int pageId;
+  PopularFoodDetail({Key?key, required this.pageId}):super(key:key);
+
+
 
   @override
   Widget build(BuildContext context) {
+
+    var product=Get.find<PopularPorductController>().popularProductList[pageId];
+    print("Page Id is" +pageId.toString());
+    print("Product name"+ product.name.toString());
     return Scaffold(
         backgroundColor:Colors.white,
       body: Stack(
@@ -36,8 +46,8 @@ class PopularFoodDetail extends StatelessWidget {
                 decoration: BoxDecoration(
                   image:DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage(
-                        "assets/image/food0.png"
+                    image: NetworkImage(
+                       AppConstants.BASE_URL+AppConstants.UPLOAD_URL+product.img!
                         )
                   )
                 ),
@@ -82,12 +92,12 @@ class PopularFoodDetail extends StatelessWidget {
             child:  Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AppColumn(text: "Chineese Side",),
+                AppColumn(text: product.name!,),
                 SizedBox(height: Dimensions.height20,),
                 BigText(text:"Introduce"),
                 SizedBox(height: Dimensions.height20,),
 
-                Expanded(child: SingleChildScrollView(child: ExpandableTextWidget(text: "The food industry is a complex, global network of diverse businesses that supplies most of the food consumed by the world's population. The food industry today has become highly diversified, with manufacturing ranging from small, traditional, family-run activities that are highly labour-intensive, to large, capital-intensive and highly mechanized industrial processes. Many food industries depend almost entirely")))
+                Expanded(child: SingleChildScrollView(child: ExpandableTextWidget(text: product.description!,)))
               ],
             ),
 
@@ -127,7 +137,7 @@ class PopularFoodDetail extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.only(top: Dimensions.height20,bottom: Dimensions.height20,left: Dimensions.width20,right: Dimensions.width20),
-              child: BigText(text: "\$10 |Add to cart", color: Colors.white,),
+              child: BigText(text: "\$${product.price!}"+"  |Add to cart", color: Colors.white,),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Dimensions.raduis20),
                 color: AppColors.mainColor,

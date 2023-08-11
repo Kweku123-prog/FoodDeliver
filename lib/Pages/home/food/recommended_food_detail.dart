@@ -1,29 +1,42 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/controllers/recommended_product_controller.dart';
 import 'package:food_delivery/widgets/app_column.dart';
 import 'package:food_delivery/widgets/app_icon.dart';
 import 'package:food_delivery/widgets/big_text.dart';
 import 'package:food_delivery/widgets/expandable_text_widget.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
+import '../../../routes/route_helper.dart';
+import '../../../utils/app_constant.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/dimentions.dart';
 
 class RecommendedFodDetail extends StatelessWidget {
-  const RecommendedFodDetail({Key?key}):super(key:key);
+  final int pageId;
+  const RecommendedFodDetail({Key?key, required this.pageId}):super(key:key);
 
   @override
   Widget build(BuildContext context) {
+    var product=Get.find<RecommendedProductController>().recommendedProductList[pageId];
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView (
         slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             toolbarHeight: 60,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AppIcon(icon: Icons.clear),
+                GestureDetector(
+
+                    onTap:(){
+                      Get.toNamed(RouteHelper.getInitial());
+                    },
+                    child: AppIcon(icon: Icons.clear)),
                 AppIcon(icon: Icons.shopping_cart_outlined)
               ],
             ),
@@ -50,7 +63,7 @@ class RecommendedFodDetail extends StatelessWidget {
             backgroundColor: AppColors.yellowColor,
             expandedHeight: 300,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset("assets/image/food0.png",
+              background: Image.network( AppConstants.BASE_URL+AppConstants.UPLOAD_URL+product.img!,
                 width: double.maxFinite,
                 fit: BoxFit.cover,
 
@@ -62,7 +75,7 @@ class RecommendedFodDetail extends StatelessWidget {
               children: [
                 Container(
 
-                  child: ExpandableTextWidget(text: "This is an e-commerce To some, snaffling a cold cut of ham from the fridge is one of the high points of the festive season. Once glazed and studded with decorative cloves, you have a real feast on your hands. And the best bit is that it just keeps on giving – even a small ham joint app forThis is an e-commerce app for food delivery using flutter with backend as crash course tutorial for iOS and Android. food delivery using flutter with backend as crash course tutorial for iOS and Android. This is a shopping app with backend of Laravel and Laravel admin panel using restful api complete CRUD operations. We also used firebase for notification. This tutorial covers complete shopping cart, placing orders, signup or registration, sign-in or login, paym"
+                  child: ExpandableTextWidget(text: product.description!
                     ,
 
 

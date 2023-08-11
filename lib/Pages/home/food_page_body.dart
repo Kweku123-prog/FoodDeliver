@@ -66,20 +66,15 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                  height: Dimensions.pageView,
 
 
-                 child: GestureDetector(
-                   onTap: (){
-                     Get.toNamed(RouteHelper.getPopularFood());
+                 child: PageView.builder(
+                   controller: pageController,
+
+                   itemCount: popularProducts.popularProductList.length,
+
+                   itemBuilder: (context,position){
+                     return _buildPageItem(position,popularProducts.popularProductList[position]);
                    },
-                   child: PageView.builder(
-                     controller: pageController,
 
-                     itemCount: popularProducts.popularProductList.length,
-
-                     itemBuilder: (context,position){
-                       return _buildPageItem(position,popularProducts.popularProductList[position]);
-                     },
-
-                   ),
                  )
              ):CircularProgressIndicator(
                color: AppColors.mainColor,
@@ -131,78 +126,83 @@ class _FoodPageBodyState extends State<FoodPageBody> {
              physics: NeverScrollableScrollPhysics(),
              itemCount: recommendedProduct.recommendedProductList.length,
              itemBuilder:(context,index) {
-               return Container(
-                 margin: EdgeInsets.only(left: Dimensions.width20,right: Dimensions.width20, bottom:Dimensions.height10 ),
-                 child: Row(
-                   children: [
-                     //Image Section
-                     Container(
-                       width:Dimensions.listViewImgSize,
-                       height: Dimensions.listViewImgSize,
-                       decoration: BoxDecoration(
-                           borderRadius: BorderRadius.circular(Dimensions.raduis20),
-                           color: Colors.white38,
-                           image:DecorationImage(
-                               fit: BoxFit.cover,
-                                image:NetworkImage(
-                           AppConstants.BASE_URL+AppConstants.UPLOAD_URL+recommendedProduct.recommendedProductList[index].img!
-                           ),
-                           )
-                       ),
-                     ),
-                     Expanded(
-                       child: Container(
-
-                         height: Dimensions.listviewtextSize,
-
+               return GestureDetector(
+                 onTap: (){
+                   Get.toNamed(RouteHelper.getRecommendedFoo(index));
+                 },
+                 child: Container(
+                   margin: EdgeInsets.only(left: Dimensions.width20,right: Dimensions.width20, bottom:Dimensions.height10 ),
+                   child: Row(
+                     children: [
+                       //Image Section
+                       Container(
+                         width:Dimensions.listViewImgSize,
+                         height: Dimensions.listViewImgSize,
                          decoration: BoxDecoration(
-                           borderRadius: BorderRadius.only(
-                               topRight: Radius.circular(Dimensions.raduis20),
-                               bottomRight: Radius.circular(Dimensions.raduis20)
-                           ),
-                           color: Colors.white,
-                         ),
-
-                         child:
-                         Padding(
-                           padding: EdgeInsets.only(left:Dimensions.width10,right: Dimensions.width10),
-                           child: Column(
-                             crossAxisAlignment: CrossAxisAlignment.start,
-                             mainAxisAlignment: MainAxisAlignment.center,
-                             children: [
-                               BigText(text: recommendedProduct.recommendedProductList[index].name!),
-
-                               SizedBox(
-                                 height: Dimensions.height10,
-                               ),
-                               SmallText(text: "With Ghanaian Characteristics"),
-
-
-                               SizedBox(
-                                 height: Dimensions.height10,
-                               ),
-                               Row(
-                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                                 children: [
-
-                                   IconAndTextWidget(icon: Icons.circle_sharp, text: "Normal", iconColor: AppColors.iconColor1),
-
-                                   IconAndTextWidget(icon: Icons.location_on, text: "1.7km", iconColor: AppColors.mainColor),
-
-                                   IconAndTextWidget(icon: Icons.access_time_filled_rounded, text: "32min", iconColor: AppColors.iconColor2)
-
-                                 ],
-
-                               ),
-                             ],
-                           ),
+                             borderRadius: BorderRadius.circular(Dimensions.raduis20),
+                             color: Colors.white38,
+                             image:DecorationImage(
+                                 fit: BoxFit.cover,
+                                  image:NetworkImage(
+                             AppConstants.BASE_URL+AppConstants.UPLOAD_URL+recommendedProduct.recommendedProductList[index].img!
+                             ),
+                             )
                          ),
                        ),
-                     )
-                     //text section
+                       Expanded(
+                         child: Container(
 
-                   ],
+                           height: Dimensions.listviewtextSize,
+
+                           decoration: BoxDecoration(
+                             borderRadius: BorderRadius.only(
+                                 topRight: Radius.circular(Dimensions.raduis20),
+                                 bottomRight: Radius.circular(Dimensions.raduis20)
+                             ),
+                             color: Colors.white,
+                           ),
+
+                           child:
+                           Padding(
+                             padding: EdgeInsets.only(left:Dimensions.width10,right: Dimensions.width10),
+                             child: Column(
+                               crossAxisAlignment: CrossAxisAlignment.start,
+                               mainAxisAlignment: MainAxisAlignment.center,
+                               children: [
+                                 BigText(text: recommendedProduct.recommendedProductList[index].name!),
+
+                                 SizedBox(
+                                   height: Dimensions.height10,
+                                 ),
+                                 SmallText(text: "With Ghanaian Characteristics"),
+
+
+                                 SizedBox(
+                                   height: Dimensions.height10,
+                                 ),
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                                   children: [
+
+                                     IconAndTextWidget(icon: Icons.circle_sharp, text: "Normal", iconColor: AppColors.iconColor1),
+
+                                     IconAndTextWidget(icon: Icons.location_on, text: "1.7km", iconColor: AppColors.mainColor),
+
+                                     IconAndTextWidget(icon: Icons.access_time_filled_rounded, text: "32min", iconColor: AppColors.iconColor2)
+
+                                   ],
+
+                                 ),
+                               ],
+                             ),
+                           ),
+                         ),
+                       )
+                       //text section
+
+                     ],
+                   ),
                  ),
                );
 
@@ -245,31 +245,37 @@ return  Transform(
 
     children: [
 
-    Container(
+    GestureDetector(
+      onTap: (){
 
-    height: Dimensions.pageViewConatiner,
+Get.toNamed(RouteHelper.getPopularFood(index));
+},
+      child: Container(
 
-    margin: EdgeInsets.only(left: Dimensions.width10,right: Dimensions.width10),
+      height: Dimensions.pageViewConatiner,
 
-    decoration: BoxDecoration(
+      margin: EdgeInsets.only(left: Dimensions.width10,right: Dimensions.width10),
 
-        borderRadius: BorderRadius.circular(Dimensions.raduis30),
+      decoration: BoxDecoration(
 
-        color: index.isEven? Color(0xFF69c5df):Color(0xFF9294cc),
+          borderRadius: BorderRadius.circular(Dimensions.raduis30),
 
-        image: DecorationImage(
+          color: index.isEven? Color(0xFF69c5df):Color(0xFF9294cc),
 
-            fit: BoxFit.cover,
+          image: DecorationImage(
 
-            image:NetworkImage(
-              AppConstants.BASE_URL+AppConstants.UPLOAD_URL+popularProduct.img!
-            ),
+              fit: BoxFit.cover,
 
-        )
+              image:NetworkImage(
+                AppConstants.BASE_URL+AppConstants.UPLOAD_URL+popularProduct.img!
+              ),
 
-    ),
+          )
+
+      ),
 
   ),
+    ),
 
       Align(
 
