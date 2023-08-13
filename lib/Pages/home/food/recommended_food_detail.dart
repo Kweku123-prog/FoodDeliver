@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/Pages/cart/cart_page.dart';
 import 'package:food_delivery/controllers/popular_producr_controller.dart';
 import 'package:food_delivery/controllers/recommended_product_controller.dart';
 import 'package:food_delivery/widgets/app_column.dart';
@@ -38,7 +39,35 @@ class RecommendedFodDetail extends StatelessWidget {
                       Get.toNamed(RouteHelper.getInitial());
                     },
                     child: AppIcon(icon: Icons.clear)),
-                AppIcon(icon: Icons.shopping_cart_outlined)
+
+                GetBuilder<PopularPorductController>(builder: (controller){
+                  return Stack(
+
+                    children: [
+                      AppIcon(icon: Icons.shopping_cart_outlined),
+                      Get.find<PopularPorductController>().totalItems>=1?
+                      Positioned(
+                          right:0, top:0,
+                          child: GestureDetector(
+                                     onTap:(){
+                                    Get.to(()=>CartPage())   ;
+                          },
+
+                              child: AppIcon(icon: Icons.circle,size: 20,iconColor: Colors.transparent,backgroundColor: AppColors.mainColor ,))):Container(),
+                      Get.find<PopularPorductController>().totalItems>=1?
+                      Positioned(
+                          right:5, top:3,
+                          child:  BigText(text:   Get.find<PopularPorductController>().totalItems.toString(),
+
+                            size: 14,color: Colors.white,
+                          )
+
+                      ) :Container()
+
+
+                    ],
+                  );
+                })
               ],
             ),
             bottom: PreferredSize(

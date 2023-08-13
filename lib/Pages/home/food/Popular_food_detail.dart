@@ -4,6 +4,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/Pages/cart/cart_page.dart';
 import 'package:food_delivery/Pages/home/main_food_page.dart';
 import 'package:food_delivery/controllers/cart_controller.dart';
 import 'package:food_delivery/controllers/popular_producr_controller.dart';
@@ -81,7 +82,12 @@ class PopularFoodDetail extends StatelessWidget {
                     Get.find<PopularPorductController>().totalItems>=1?
                 Positioned(
                     right:0, top:0,
-                    child: AppIcon(icon: Icons.circle,size: 20,iconColor: Colors.transparent,backgroundColor: AppColors.mainColor ,)):Container(),
+                    child: GestureDetector(
+                        onTap: (){
+                          Get.to(()=>CartPage());
+                        },
+
+                        child: AppIcon(icon: Icons.circle,size: 20,iconColor: Colors.transparent,backgroundColor: AppColors.mainColor ,))):Container(),
                     Get.find<PopularPorductController>().totalItems>=1?
                     Positioned(
                         right:5, top:3,
@@ -172,18 +178,17 @@ class PopularFoodDetail extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                padding: EdgeInsets.only(top: Dimensions.height20,bottom: Dimensions.height20,left: Dimensions.width20,right: Dimensions.width20),
-                child: GestureDetector(
-                  onTap: (){
-                   popularProduct.addItem(product);
-                  }
-                  ,
+              GestureDetector(
+              onTap: (){
+              popularProduct.addItem(product);
+              },
+                child: Container(
+                  padding: EdgeInsets.only(top: Dimensions.height20,bottom: Dimensions.height20,left: Dimensions.width20,right: Dimensions.width20),
                   child: BigText(text: "\$${product.price!}"+"  |Add to cart", color: Colors.white,),
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Dimensions.raduis20),
-                  color: AppColors.mainColor,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Dimensions.raduis20),
+                    color: AppColors.mainColor,
+                  ),
                 ),
               )
             ],
