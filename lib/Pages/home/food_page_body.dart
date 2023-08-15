@@ -41,7 +41,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
       pageController.addListener(() {
         setState(() {
           _currPagevalue=   pageController.page!;
-          _currPageInt=_currPagevalue as int;
+
 
         });
 
@@ -52,6 +52,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
 
   void dispose(){
     pageController.dispose();
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -84,7 +85,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
 
       return DotsIndicator(
         dotsCount: popularProducts.popularProductList.isEmpty?1: popularProducts.popularProductList.length,
-        position: _currPageInt,
+        position: _currPagevalue.toInt(),
         decorator: DotsDecorator(
 
           activeColor: AppColors.mainColor,
@@ -118,8 +119,8 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             ],
           ),
         ),
-        
-        //List of food and images 
+
+        //List of food and images
        GetBuilder<RecommendedProductController>(builder:(recommendedProduct){
          return recommendedProduct.isLoaded?ListView.builder(
              shrinkWrap: true,
@@ -128,7 +129,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
              itemBuilder:(context,index) {
                return GestureDetector(
                  onTap: (){
-                   Get.toNamed(RouteHelper.getRecommendedFoo(index));
+                   Get.toNamed(RouteHelper.getRecommendedFoo(index,'home'));
                  },
                  child: Container(
                    margin: EdgeInsets.only(left: Dimensions.width20,right: Dimensions.width20, bottom:Dimensions.height10 ),
@@ -248,7 +249,7 @@ return  Transform(
     GestureDetector(
       onTap: (){
 
-Get.toNamed(RouteHelper.getPopularFood(index));
+Get.toNamed(RouteHelper.getPopularFood(index,'home '));
 },
       child: Container(
 

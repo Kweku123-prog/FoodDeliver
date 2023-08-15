@@ -9,7 +9,7 @@ static double pageViewTextConatiner=screenHeight/7.03;
 static double pageView=screenHeight/2.64;
 
 
-
+static double slashImage=screenHeight/3.38;
 static double height10=screenHeight/84.4;
 static double height20=screenHeight/42.2;
 static double height15=screenHeight/56.27;

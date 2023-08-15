@@ -15,6 +15,7 @@ import 'package:food_delivery/widgets/expandable_text_widget.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../../routes/route_helper.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/dimentions.dart';
 import '../../../widgets/big_text.dart';
@@ -23,8 +24,9 @@ import '../../../widgets/small_text.dart';
 
 class PopularFoodDetail extends StatelessWidget {
 
-  int pageId;
-  PopularFoodDetail({Key?key, required this.pageId}):super(key:key);
+   int pageId;
+   String page;
+   PopularFoodDetail({Key?key, required this.pageId, required this.page}):super(key:key);
 
 
 
@@ -66,40 +68,40 @@ class PopularFoodDetail extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
                GestureDetector(
-                   onTap:(){
-                     Get.to(()=>MainfoodPage());
 
-          },
                    child: AppIcon(icon: Icons.arrow_back_ios)),
 
 
 
               GetBuilder<PopularPorductController>(builder: (controller){
-                return Stack(
+                return GestureDetector(
+                  onTap: (){
 
-                  children: [
-                    AppIcon(icon: Icons.shopping_cart_outlined),
-                    Get.find<PopularPorductController>().totalItems>=1?
-                Positioned(
-                    right:0, top:0,
-                    child: GestureDetector(
-                        onTap: (){
-                          Get.to(()=>CartPage());
-                        },
+                    if(controller.totalItems>=1)
+                    Get.toNamed(RouteHelper.getcartpage())  ;
+                  },
 
-                        child: AppIcon(icon: Icons.circle,size: 20,iconColor: Colors.transparent,backgroundColor: AppColors.mainColor ,))):Container(),
-                    Get.find<PopularPorductController>().totalItems>=1?
-                    Positioned(
-                        right:5, top:3,
-                        child:  BigText(text:   Get.find<PopularPorductController>().totalItems.toString(),
+                  child: Stack(
 
-                        size: 14,color: Colors.white,
-                        )
+                    children: [
+                      AppIcon(icon: Icons.shopping_cart_outlined),
+                      controller.totalItems>=1?
+                  Positioned(
+                      right:0, top:0,
+                      child: AppIcon(icon: Icons.circle,size: 20,iconColor: Colors.transparent,backgroundColor: AppColors.mainColor ,)):Container(),
+                      Get.find<PopularPorductController>().totalItems>=1?
+                      Positioned(
+                          right:5, top:3,
+                          child:  BigText(text:   Get.find<PopularPorductController>().totalItems.toString(),
 
-                    ) :Container()
+                          size: 14,color: Colors.white,
+                          )
+
+                      ) :Container()
 
 
-                  ],
+                    ],
+                  ),
                 );
               })
             ],
