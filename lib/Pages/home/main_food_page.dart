@@ -9,7 +9,11 @@ import 'package:flutter/material.dart';
 
 import 'package:food_delivery/utils/dimentions.dart';
 import 'package:food_delivery/widgets/big_text.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
+import '../../controllers/popular_producr_controller.dart';
+import '../../controllers/recommended_product_controller.dart';
 import '../../utils/colors.dart';
 import '../../widgets/small_text.dart';
 import 'food_page_body.dart';
@@ -24,13 +28,17 @@ class MainfoodPage extends StatefulWidget {
 }
 
 class _MainfoodPageState extends State<MainfoodPage> {
+
+
+  Future<void> _loadResource() async {
+    await  Get.find<PopularPorductController>().getPopularproductlsit();
+    await Get.find<RecommendedProductController>().getRecommendedProductList();
+  }
   @override
   Widget build(BuildContext context) {
     
     print("current height "+ MediaQuery.of(context).size.height.toString());
-    return  Scaffold(
-
-      body: Column(
+    return  RefreshIndicator(child: Column(
         children: [
           Container(
             margin: EdgeInsets.only(top: Dimensions.height45,bottom: Dimensions.height15),
@@ -66,7 +74,6 @@ class _MainfoodPageState extends State<MainfoodPage> {
           ),
           Expanded(child: SingleChildScrollView(child: FoodPageBody())),
         ]
-      ),
-    );
+    ),onRefresh: _loadResource);
   }
 }
