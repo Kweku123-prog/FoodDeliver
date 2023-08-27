@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/Pages/auth/sign_in_page.dart';
+import 'package:food_delivery/Pages/auth/sign_up_page.dart';
 import 'package:food_delivery/Pages/home/food/recommended_food_detail.dart';
 import 'package:food_delivery/Pages/home/food_page_body.dart';
 import 'package:food_delivery/Pages/home/home_page.dart';
@@ -34,11 +36,11 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
-         home: HomePage(),
-          initialRoute: RouteHelper.getSplashpage(),
-          getPages: RouteHelper.routes,
+         home: SignInPage(),
+         // initialRoute: RouteHelper.getSplashpage(),
+        //  getPages: RouteHelper.routes,
         );
-      });
+      }); 
     });
   }
 }
