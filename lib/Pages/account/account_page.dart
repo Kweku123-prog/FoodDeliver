@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/controllers/auth_controller.dart';
+import 'package:food_delivery/routes/route_helper.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:food_delivery/widgets/account_widget.dart';
 import 'package:food_delivery/widgets/app_icon.dart';
 import 'package:food_delivery/widgets/big_text.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../utils/dimentions.dart';
 
@@ -91,21 +95,32 @@ const AccountPage ({Key? key}) : super(key: key);
                    size: Dimensions.height10*5 ,
                  ) ,
                      bigText: BigText(
-                       text: "Kweku ",
+                       text: "Message ",
                      )
                  ),
                  SizedBox(height: Dimensions.height20,),
 
                  //message
-                 AccountWidget(appIcon: AppIcon(icon: Icons.message_outlined,
-                   backgroundColor: Colors.redAccent,
-                   iconColor: Colors.white,
-                   iconSize: Dimensions.height10*5/2,
-                   size: Dimensions.height10*5 ,
-                 ) ,
-                     bigText: BigText(
-                       text: "Kweku ",
-                     )
+                 GestureDetector(
+                   onTap: (){
+                     if(Get.find<AuthController>().userLoggedIn()){
+                       Get.find<AuthController>().clearSharedData();
+                       Get.toNamed(RouteHelper.getInitial());
+                       
+                     }
+
+
+                   },
+                   child: AccountWidget(appIcon: AppIcon(icon: Icons.logout_outlined,
+                     backgroundColor: Colors.redAccent,
+                     iconColor: Colors.white,
+                     iconSize: Dimensions.height10*5/2,
+                     size: Dimensions.height10*5 ,
+                   ) ,
+                       bigText: BigText(
+                         text: "Logout",
+                       )
+                   ),
                  ),
                ],
              ),

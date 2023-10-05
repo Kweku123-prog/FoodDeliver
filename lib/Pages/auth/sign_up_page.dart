@@ -11,6 +11,7 @@ import 'package:get/get_core/src/get_main.dart';
 
 import '../../base/show_custom_message.dart';
 import '../../models/signup_body_model.dart';
+import '../../routes/route_helper.dart';
 import '../../utils/dimentions.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -34,7 +35,7 @@ class SignUpPage extends StatelessWidget {
       String name=nameController.text.trim();
       String phone=phoneController.text.trim();
       String email=emailController.text.trim();
-      String password=nameController.text.trim();
+      String password=passwordController.text.trim();
 
       if(name.isEmpty){
 
@@ -65,8 +66,7 @@ class SignUpPage extends StatelessWidget {
         authController.registration(signUpBody).then((status){
            if(status.isSuccess){
 
-             print("Success Registration");
-
+             Get.toNamed(RouteHelper.getInitial());
 
            }
            else{
@@ -99,7 +99,9 @@ class SignUpPage extends StatelessWidget {
               ),
               AppTextField(textController: emailController, hinttext: "Email", icon: Icons.email),
               SizedBox(height: Dimensions.height20,),
-              AppTextField(textController: passwordController, hinttext: "Password", icon: Icons.password),
+              AppTextField(
+                isObscure: true,
+                  textController: passwordController, hinttext: "Password", icon: Icons.password),
               SizedBox(height: Dimensions.height20,),
               AppTextField(textController: nameController, hinttext: "Name", icon: Icons.person),
               SizedBox(height: Dimensions.height20,),

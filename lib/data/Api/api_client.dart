@@ -30,7 +30,8 @@ void updateHeadrerer(String token ){
   _mainheaders={
 
     'Content-type':'application/json; charset=UTF-8',
-    'Authorization':'Bearer $token',
+    'Authorization': 'Bearer $token',
+    "HttpHeaders.contentTypeHeader": "application/json"
   };
 }
 
