@@ -150,5 +150,8 @@ int get totalAmount{
     update();
   }
 
-
+void clearCartHistroy (){
+    cartRepo.clearCartHistory();
+    update();
+}
 }
